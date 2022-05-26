@@ -2,6 +2,9 @@
   "name": "file-uploader",
   "version": "1.0.0",
   "description": "Backend for File Uploader",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "main": "index.js",
   "scripts": {
     "start": "dotenv cross-var npm run %CUR_ENV%",
