@@ -7,7 +7,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "dotenv cross-var npm run %CUR_ENV%",
+    "start": "node index.js",
     "deploy:dev": "NODE_ENV=development node index.js",
     "deploy:prod": "NODE_ENV=production node index.js",
     "dev": "node index.js"
