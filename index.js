@@ -1,5 +1,6 @@
 const app = require("express")();
 const express = require("express");
+var cors = require("cors");
 
 require("dotenv").config();
 
@@ -8,7 +9,7 @@ const routes = require("./routes");
 const errorHandler = require("./error/handler");
 
 const PORT = process.env.PORT || 8000;
-
+app.use(cors());
 establishDbConnection();
 app.use(express.json());
 app.use(express.urlencoded());
