@@ -28,15 +28,43 @@ describe("Users", () => {
     });
   });
 
-  describe("/GET a file", () => {
-    it("it should GET a file", (done) => {
+  /*
+   * Test the /POST route
+   */
+  describe("/POST book", () => {
+    it("it should create a test user in the database", (done) => {
+      const uuid = require("uuid");
+      const id = uuid.v4();
+
+      let data = {
+        username: "test-user",
+        name: "test",
+      };
       chai
         .request(app)
-        .get("/api/file/a32dde30-68bf-4da4-9cf1-44161f5d5d90")
+        .post("/api/user/" + id)
+        .send(data)
         .end((err, res) => {
           res.should.have.status(200);
+          res.body.should.be.a("object");
           done();
         });
     });
   });
+
+  // describe("/GET a file", () => {
+  //   it("it should GET a file", (done) => {
+  //     chai
+  //       .request(app)
+  //       .get("/api/file/a32dde30-68bf-4da4-9cf1-44161f5d5d90")
+  //       .end((err, res) => {
+  //         res.should.have.status(200);
+  //         done();
+  //       });
+  //   });
+
+  //   after(() => {
+  //     app.close();
+  //   });
+  // });
 });

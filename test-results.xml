@@ -1,30 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Mocha Tests" time="0.688" tests="2" failures="1">
-  <testsuite name="Root Suite" timestamp="2023-01-27T17:00:50" tests="0" time="0.000" failures="0">
+<testsuites name="Mocha Tests" time="0.330" tests="2" failures="1">
+  <testsuite name="Root Suite" timestamp="2023-01-28T08:12:47" tests="0" time="0.000" failures="0">
   </testsuite>
-  <testsuite name="Users" timestamp="2023-01-27T17:00:50" tests="0" file="/home/vienna/Documents/project/inhouse/CoderSpace-Api/test/routes.js" time="0.000" failures="0">
+  <testsuite name="Users" timestamp="2023-01-28T08:12:47" tests="0" file="/home/vienna/Documents/project/inhouse/CoderSpace-Api/test/routes.js" time="0.000" failures="0">
   </testsuite>
-  <testsuite name="/GET user details" timestamp="2023-01-27T17:00:50" tests="1" file="/home/vienna/Documents/project/inhouse/CoderSpace-Api/test/routes.js" time="0.525" failures="0">
-    <testcase name="Users /GET user details it should GET the user" time="0.516" classname="it should GET the user">
+  <testsuite name="/GET user details" timestamp="2023-01-28T08:12:47" tests="1" file="/home/vienna/Documents/project/inhouse/CoderSpace-Api/test/routes.js" time="0.320" failures="0">
+    <testcase name="Users /GET user details it should GET the user" time="0.315" classname="it should GET the user">
     </testcase>
   </testsuite>
-  <testsuite name="/GET a file" timestamp="2023-01-27T17:00:51" tests="1" file="/home/vienna/Documents/project/inhouse/CoderSpace-Api/test/routes.js" time="0.159" failures="1">
-    <testcase name="Users /GET a file it should GET a file" time="0.146" classname="it should GET a file">
-      <failure message="expected Response{ domain: null, …(35), …(1) } to have status code 200 but got 500" type="AssertionError"><![CDATA[AssertionError: expected Response{ domain: null, …(35), …(1) } to have status code 200 but got 500
-    at /home/vienna/Documents/project/inhouse/CoderSpace-Api/test/routes.js:37:27
-    at Test.Request.callback (node_modules/superagent/lib/node/index.js:716:12)
-    at /home/vienna/Documents/project/inhouse/CoderSpace-Api/node_modules/superagent/lib/node/index.js:916:18
-    at IncomingMessage.<anonymous> (node_modules/superagent/lib/node/parsers/json.js:19:7)
-    at IncomingMessage.emit (node:events:525:35)
-    at IncomingMessage.emit (node:domain:489:12)
-    at endReadableNT (node:internal/streams/readable:1359:12)
-    at processTicksAndRejections (node:internal/process/task_queues:82:21)
-
-      + expected - actual
-
-      -500
-      +200
-      ]]></failure>
+  <testsuite name="/POST book" timestamp="2023-01-28T08:12:47" tests="1" file="/home/vienna/Documents/project/inhouse/CoderSpace-Api/test/routes.js" time="0.005" failures="1">
+    <testcase name="Users /POST book it should not POST a book without pages field" time="0.001" classname="it should not POST a book without pages field">
+      <failure message="server is not defined" type="ReferenceError"><![CDATA[ReferenceError: server is not defined
+    at Context.<anonymous> (test/routes.js:44:18)
+    at processImmediate (node:internal/timers:471:21)]]></failure>
     </testcase>
   </testsuite>
 </testsuites>
