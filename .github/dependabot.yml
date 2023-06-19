@@ -1,0 +1,183 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  Richard Spindler
+Richard Spindler
+Posted on 16 Jun 2021
+
+
+3
+
+2
+How to keep a Dockerfile updated with Dependabot
+#
+docker
+#
+github
+#
+php
+Dependabot used to be a separate service that scanned your github repository for outdated dependencies in 3rd party packages and libraries.
+
+This service was acquired by Github and is now integrated into the platform.
+
+It is a free service, and a great way to keep your projects dependencies up to date.
+
+Dependabot will automatically create a pull request to your project to bump any outdated dependencies to the latest version.
+
+As an example project I am using a simple "Hello World" style PHP script that runs in the standard PHP Docker image. And Dependabot will bring the outdated PHP version up to date with.
+
+To verify that the application is compatible with the updated version of PHP a Github actions workflow will run the code with the Dockerfile.
+
+So here is what you will learn:
+
+Create a Dockerfile and hello.php as the application
+Create a Github Actions workflow to run the above code in Docker
+Enable Dependabot for Docker
+Dockerfile
+This is the simplest Dockerfile for running a PHP script. The current stable version of PHP is 8.0.7 but I am using a slightly outdated version number. I want to see Dependabot taking action on this outdated version.
+FROM php:8.0.0
+Note: Rather than using a specific version I could use the Docker tag latest to always have the latest version. But this is considered a bad practice.
+
+Before upgrading to the latest version of a dependency, you must run your applications tests.
+
+Without a specific version in the Dockerfile you cannot run an automated test suite before the upgrade.
+
+hello.php
+This Hello World will not actually print the string "Hello World", but instead the current PHP version number. Therefore the logs of the actions workflow show if the PHP version has been updated correctly and that the correct Dockerfile was used.
+<?
+echo phpversion();
+?>
+.github/workflows/php.yml
+This is a very basic actions workflow that runs on the main branch and also on any pull requests that are made for the main branch.
+
+Github recently updated the default branch name from master to using main. So if you have an older repository, you must change this example to work with the old convention.
+name: PHP CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build docker images
+      run: docker build -t local - < Dockerfile
+    - name: Run tests
+      run: docker run -t -v $PWD:/srv -w/srv local php hello.php
+This builds the Dockerfile and runs the code in hello.php inside that image.
+
+.github/dependabot.yml
+To enable Dependabot you must go to "Insights" on your repository main page.
+
+The setting for Dependabot is hidden under "Dependency Graph":
+
+Screenshot of Dependabot Settings
+
+You can use the default configuration file that is suggested by Github. Just add "docker" to "package-ecosystem", Dependabot will find your Dockerfile automatically.
+
+For me the dependabot.yml looks like this:
+version: 2
+updates:
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "daily"
+Waiting for a pull request
+Now Dependabot is set up and ready to go. It will check your Dockerfile daily, and creates a pull request to upgrade to the latest stable release of PHP.
+
+And the pull request is verified by the Github actions workflow that I created above.
+
+For me the diff from the commit by the Dependabot looks like this:
+
+Screenshot of commit for Dockerfile upgrade
+
+Learning more
+Keeping your dependencies up to date is a best practice for software engineering.
+
+If you like this article: I am writing a book about best practices for legacy code projects:
+
+Leading a Legacy Software Team
+
+Top comments (0)
+
+Subscribe
+pic
+Add to the discussion
+Code of Conduct • Report abuse
+DEV Community
+
+Trending in PHP
+The PHP community is exploring async programming for better scaling, emphasizing that speed isn't the only indicator of quality. Developers are using code quality tools to improve their projects, while also discussing memory errors and integrating payment gateways like CCAvenue.
+
+Documatic 
+Top 6 PHP code quality tools 2023
+Bentil Shadrack for Documatic ・ May 30 ・ 7 min read
+#php #webdev #tooling
+jackmarchant 
+Exploring Async PHP
+Jack Marchant ・ May 31 ・ 9 min read
+#php #async
+jmau111 
+PHP: speed is not the ultimate indicator
+jmau111⭐⭐⭐ ・ May 25 ・ 3 min read
+#programming #performance #beginners #php
+jmau111 
+PHP: memory errors
+jmau111⭐⭐⭐ ・ May 24 ・ 2 min read
+#php #beginners #programming
+djsmk123 
+Flutter CC-Avenue Payment Gateway Integration ft. PHP
+Md. Mobin ・ May 28 ・ 4 min read
+#flutter #php #tutorial #android
+Read next
+bdougieyo profile image
+A Rounded Solution to Image Handling on the OpenSauced Dashboard
+Brian Douglas - May 17
+
+blackgirlbytes profile image
+How to set up a dev container for a Next.js/TypeScript app
+Rizèl Scarlett - May 17
+
+biostate profile image
+How to Refresh Form Data in FilamentPHP Action
+Süleyman Özgür Özarpacı - May 19
+
+bravinsimiyu profile image
+How to Build and Deploy a React.js Application with Node.js Backend to Amazon EKS Cluster
+Bravin Wasike - May 19
+
+
+Richard Spindler
+Follow
+C++, Legacy Code, TDD, CI/CD
+LOCATION
+Berlin
+JOINED
+2 Jul 2018
+More from Richard Spindler
+Get a Legacy PHP (5.3) application running in Docker
+#php #mysql #docker #legacycode
+Howto use Docker Agent in a Jenkinsfile Matrix Build
+#jenkins #docker #php
+DEV Community
+
+OpenAI
+
+How will ChatGPT change the way we code?
+We're excited to find out, and the DEV community is the perfect place to explore this together.
+
+Join the DEV community. It's free and only takes a minute.
+Stay up-to-date on the latest AI content.
+
+version: 2
+updates:
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "daily"
