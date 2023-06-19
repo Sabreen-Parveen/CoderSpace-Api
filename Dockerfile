@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:10.14.2- jessie
 WORKDIR /usr/src/app
 COPY package*.json ./
 COPY . .
