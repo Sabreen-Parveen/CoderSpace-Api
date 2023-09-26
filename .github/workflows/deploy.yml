@@ -1,0 +1,45 @@
+name: Upload files to s3
+
+on:
+  workflow_dispatch:
+    inputs:
+      upload:
+        description: "Choose from prod deploy or dry run"
+        required: true
+        default: "dry run"
+        type: choice
+        options:
+          - prod
+          - dry run
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  Deploy:
+    name: Upload on s3
+    runs-on: ubuntu-latest
+    environment: Deployment
+    env:
+        AWS_REGION: eu-central-1
+
+    steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: ${{ vars.AWS_ROLE_FOR_GITHUB_ACTIONS_GlOBAL }}
+        role-session-name: githubrolesession
+        aws-region: ${{ env.AWS_REGION }}    
+        mask-aws-account-id: 'no'
+
+    - uses: actions/checkout@v2 
+    - name: Upload on S3
+      run: |
+        set -eo pipefail
+        PRODRUN="${{ inputs.upload }}"
+        BRANCH=${{ github.ref_name }}
+        DEPLOY_PATH=""
+        if [ "$BRANCH" != 'master' ]; then DEPLOY_PATH="/$BRANCH"; fi
+        if [ "$PRODRUN" = 'prod' ]; then PRODRUN=''; else PRODRUN='--dryrun'; fi 
+        aws s3 sync server/docker s3://production.getfundwave.com$DEPLOY_PATH/docker --delete --exclude '**/changelog.txt' ${PRODRUN}
