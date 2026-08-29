@@ -30,7 +30,7 @@
     "@aws-sdk/client-glacier": "^3.33.0",
     "@aws-sdk/client-s3": "3.33.0",
     "@aws-sdk/s3-request-presigner": "3.33.0",
-    "axios": "^0.27.2",
+    "axios": "^1.0.0",
     "chai": "^4.3.7",
     "chai-http": "^4.3.0",
     "cors": "^2.8.5",
